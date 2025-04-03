@@ -1,0 +1,39 @@
+FROM golang:1.21-alpine AS builder
+
+WORKDIR /app
+
+# Install FFmpeg and other dependencies
+RUN apk add --no-cache ffmpeg build-base git
+
+# Copy go mod and sum files
+COPY go.mod go.sum ./
+
+# Download dependencies
+RUN go mod download
+
+# Copy source code
+COPY . .
+
+# Build the application
+RUN go build -o /app/backend ./cmd/main.go
+
+# Final stage
+FROM alpine:latest
+
+WORKDIR /app
+
+# Install FFmpeg
+RUN apk add --no-cache ffmpeg
+
+# Copy binary from builder
+COPY --from=builder /app/backend /app/
+COPY config.yaml /app/
+
+# Set executable permissions
+RUN chmod +x /app/backend
+
+# Expose ports
+EXPOSE 8000
+
+# Command to run
+CMD ["/app/backend"]

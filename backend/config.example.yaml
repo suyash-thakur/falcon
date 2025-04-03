@@ -1,0 +1,55 @@
+server:
+  port: 8000
+  host: 0.0.0.0
+
+database:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: postgres
+  dbname: falcon
+  sslmode: disable
+  max_connections: 20
+
+redis:
+  host: localhost
+  port: 6379
+  password: ""
+  db: 0
+
+storage:
+  type: s3
+  endpoint: localhost:9000
+  region: us-east-1
+  bucket: videos
+  access_key: minioadmin
+  secret_key: minioadmin
+  use_ssl: false
+
+temporal:
+  host: localhost
+  port: 7233
+  namespace: default
+
+ffmpeg:
+  path: /usr/bin/ffmpeg
+  thread_count: 4
+  preset: medium
+  formats:
+    - name: hls
+      enabled: true
+    - name: dash
+      enabled: true
+  resolutions:
+    - width: 1920
+      height: 1080
+      bitrate: 5000k
+    - width: 1280
+      height: 720
+      bitrate: 2500k
+    - width: 854
+      height: 480
+      bitrate: 1000k
+    - width: 640
+      height: 360
+      bitrate: 500k 

@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: falcon-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: falcon
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - falcon-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    container_name: falcon-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - falcon-network
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio
+    container_name: falcon-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - falcon-network
+    restart: unless-stopped
+
+  temporal:
+    image: temporalio/auto-setup:1.20.4
+    container_name: falcon-temporal
+    ports:
+      - "7233:7233"
+    environment:
+      - DB=postgresql
+      - DB_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PWD=postgres
+      - POSTGRES_SEEDS=postgres
+    depends_on:
+      - postgres
+    networks:
+      - falcon-network
+    restart: unless-stopped
+
+  temporal-ui:
+    image: temporalio/ui:2.22.1
+    container_name: falcon-temporal-ui
+    ports:
+      - "8080:8080"
+    environment:
+      - TEMPORAL_ADDRESS=temporal:7233
+    depends_on:
+      - temporal
+    networks:
+      - falcon-network
+    restart: unless-stopped
+
+networks:
+  falcon-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:

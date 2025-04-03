@@ -1,0 +1,80 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Dependency directories 
+vendor/
+
+# Go workspace file
+go.work
+
+# Environment files
+.env
+.env.local
+
+# Build directories
+bin/
+build/
+
+# Log files
+*.log
+logs/
+
+# macOS 
+.DS_Store
+
+# Database files
+*.db
+*.sqlite
+
+# Configuration files with sensitive information
+config.yaml
+config.local.yaml
+
+# Media files
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.m4v
+*.ts
+*.m3u8
+*.mpd
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Transcoding output directories
+hls/
+dash/
+
+# Node dependencies 
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Distribution directories 
+dist/
+
+docker-compose.prod.yaml
+
+# Misc (For dev)
+tech-doc.md
