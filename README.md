@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://res.cloudinary.com/diroilukd/image/upload/v1743710311/ChatGPT_Image_Apr_4_2025_01_27_52_AM_zi2sjz.png" alt="Falcon VOD Logo" width="200">
+  <img src="https://res.cloudinary.com/diroilukd/image/upload/v1743710535/falcon-logo-white.png" alt="Falcon VOD Logo" width="200">
 </p>
 
 # Falcon VOD
